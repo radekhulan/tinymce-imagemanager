@@ -1,0 +1,21 @@
+# Apache configuration for the demo / landing page at the bundle root.
+# (The File & Image Manager ships its own .htaccess under fileimagemanager/public/.)
+
+DirectoryIndex index.php index.html
+
+# Don't list folder contents
+Options -Indexes
+
+# MIME types the manager / TinyMCE rely on
+<IfModule mod_mime.c>
+    AddType image/webp        .webp
+    AddType image/avif        .avif
+    AddType font/woff2        .woff2
+    AddType application/json  .json
+    AddType text/javascript   .mjs .js
+</IfModule>
+
+# Keep the helper scripts from being served as text
+<FilesMatch "\.(ps1|sh)$">
+    Require all denied
+</FilesMatch>

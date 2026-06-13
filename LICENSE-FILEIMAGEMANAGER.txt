@@ -1,0 +1,18 @@
+File & Image Manager — License notice
+=====================================
+
+  Copyright (c) Radek Hulan — https://mywebdesign.dev/
+  https://github.com/radekhulan/fileimagemanager
+
+Released into the public domain under
+    CC0 1.0 Universal (Creative Commons Zero)
+    https://creativecommons.org/publicdomain/zero/1.0/
+
+To the extent possible under law, the author has waived all copyright and related
+or neighboring rights to this work. You may use, modify, redistribute and build
+upon it freely, including for commercial purposes, without asking permission and
+without attribution. The work is provided "as is", without any warranty.
+
+Note: the File & Image Manager is downloaded by setup.ps1 / setup.sh from its
+GitHub release and is not stored in this repository. Its own LICENSE file ships
+inside the downloaded fileimagemanager/ folder.

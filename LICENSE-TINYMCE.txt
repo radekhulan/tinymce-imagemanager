@@ -1,0 +1,31 @@
+TinyMCE — License notice
+========================
+
+TinyMCE is developed by Tiny Technologies, Inc.
+    Copyright (c) Tiny Technologies, Inc.
+    https://github.com/tinymce/tinymce
+
+The community build bundled here (downloaded by setup.ps1 / setup.sh) is used under
+the terms of the GNU General Public License, version 2 or (at your option) any later
+version (GPL-2.0-or-later). That is what `license_key: 'gpl'` in the editor init
+declares.
+
+  * Full license text:  https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  * After running setup, the upstream notices ship at:
+        tinymce/license.md
+        tinymce/notices.txt   (third-party components: DOMPurify, PrismJS, …)
+
+GPL summary (not a substitute for the full license):
+
+  You may use, study, share and modify TinyMCE. If you distribute it or a
+  derivative, you must do so under the same GPL-2.0-or-later terms and make the
+  corresponding source available. The software is provided WITHOUT ANY WARRANTY.
+
+Commercial / non-GPL use
+------------------------
+If GPL does not suit your project, Tiny offers TinyMCE under a commercial license
+via a Tiny Cloud subscription. See https://www.tiny.cloud/ for details. In that
+case replace `license_key: 'gpl'` with your own Tiny Cloud API key.
+
+This file documents the license of a third-party dependency only; it does not grant
+you any additional rights beyond those in the GPL itself.

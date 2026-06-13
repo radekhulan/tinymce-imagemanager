@@ -1,0 +1,24 @@
+# Shell scripts must stay LF so they run after a Linux/macOS checkout.
+*.sh    text eol=lf
+
+# Windows scripts keep CRLF.
+*.ps1   text eol=crlf
+*.cmd   text eol=crlf
+*.bat   text eol=crlf
+
+# Treat these as text with normalised LF in the repo.
+*.php   text eol=lf
+*.css   text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+
+# Binary assets — never alter.
+*.webp  binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.avif  binary
+*.woff2 binary

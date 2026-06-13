@@ -1,0 +1,33 @@
+TinyMCE with modern File & Image Manager — bundle license
+==========================================================
+
+This applies to the "glue" that lives in THIS repository — the setup and
+dev-server scripts, router.php, the demo page (index.php), the config patcher,
+and the custom icon pack / skin under custom/.
+
+  Copyright (c) Radek Hulan — https://mywebdesign.dev/
+
+Dedicated to the public domain under
+    CC0 1.0 Universal (Creative Commons Zero)
+    https://creativecommons.org/publicdomain/zero/1.0/
+
+To the extent possible under law, the author has waived all copyright and
+related or neighboring rights to this work. You may copy, modify, distribute and
+use it, even for commercial purposes, all without asking permission. The work is
+provided "as is", without warranties of any kind.
+
+
+Third-party components (NOT covered by the CC0 dedication above)
+----------------------------------------------------------------
+
+* TinyMCE — © Tiny Technologies, Inc. — GPL-2.0-or-later (community build).
+  Downloaded by the setup script; not stored in this repository.
+  See LICENSE-TINYMCE.txt and tinymce/license.md after setup.
+
+* File & Image Manager — © Radek Hulan — CC0 1.0.
+  Downloaded by the setup script; not stored in this repository.
+  See LICENSE-FILEIMAGEMANAGER.txt and https://github.com/radekhulan/fileimagemanager
+
+* Lucide icons — the SVG path data in custom/icons.js is derived from Lucide,
+  licensed under the ISC license. © Lucide Contributors.
+  https://github.com/lucide-icons/lucide/blob/main/LICENSE
