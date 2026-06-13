@@ -35,8 +35,8 @@ done
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CUSTOM="$ROOT/custom"
-TINYMCE_DIR="$ROOT/tinymce"
-FIM_DIR="$ROOT/fileimagemanager"
+TINYMCE_DIR="$ROOT/wysiwyg/tinymce"
+FIM_DIR="$ROOT/wysiwyg/fileimagemanager"
 UA="tinymce-imagemanager-setup"
 
 cyan()  { printf '\n\033[36m==> %s\033[0m\n' "$1"; }
@@ -188,7 +188,7 @@ printf '\n\033[32m==============================================================
 printf '\033[32m Done. TinyMCE %s + File & Image Manager %s\033[0m\n' "$TINYMCE_VERSION" "$FIM_TAG"
 printf '\033[32m========================================================================\033[0m\n'
 echo  " Demo page :  http://localhost${URLBASE}/"
-echo  " Manager   :  http://localhost${URLBASE}/fileimagemanager/public/"
+echo  " Manager   :  http://localhost${URLBASE}/wysiwyg/fileimagemanager/public/"
 
 printf '\n\033[33m------------------------------------------------------------------------\033[0m\n'
 printf '\033[33m SECURITY WARNING\033[0m\n'
@@ -199,5 +199,5 @@ echo  " rename and DELETE files on your server."
 echo  ""
 echo  " Before production, lock it down — see the SECURITY section in README.md"
 echo  " and the commented gate at the top of:"
-echo  "   fileimagemanager/config/filemanager.php"
+echo  "   wysiwyg/fileimagemanager/config/filemanager.php"
 printf '\033[33m------------------------------------------------------------------------\033[0m\n\n'

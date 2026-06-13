@@ -57,11 +57,11 @@ The dev server listens on every interface by default and prints both the **local
 
 ## What the setup script does
 
-1. Resolves the latest **TinyMCE** version (npm registry) and downloads the community GPL zip → `tinymce/`.
-2. Downloads all **language packs** → `tinymce/langs/`.
-3. Copies the **custom Lucide pack** to `tinymce/icons/lucide/`, the skin to `tinymce/custom.css`, and replaces the stock `default` icon pack with an empty placeholder (required — it errors once the Lucide pack is active).
-4. Resolves the latest **File &amp; Image Manager** release and unpacks the prebuilt zip → `fileimagemanager/` (ships with `vendor/` and built `public/assets/`, so no build step).
-5. **Patches** `fileimagemanager/config/filemanager.php` so uploads live in the repo-root `media/` folder (`media/source` + `media/thumbs`, committed alongside the project, URLs resolved at runtime so it works under any mount path) and injects a clearly-labelled **disabled** security gate.
+1. Resolves the latest **TinyMCE** version (npm registry) and downloads the community GPL zip → `wysiwyg/tinymce/`.
+2. Downloads all **language packs** → `wysiwyg/tinymce/langs/`.
+3. Copies the **custom Lucide pack** to `wysiwyg/tinymce/icons/lucide/`, the skin to `wysiwyg/tinymce/custom.css`, and replaces the stock `default` icon pack with an empty placeholder (required — it errors once the Lucide pack is active).
+4. Resolves the latest **File &amp; Image Manager** release and unpacks the prebuilt zip → `wysiwyg/fileimagemanager/` (ships with `vendor/` and built `public/assets/`, so no build step), and wires its TinyMCE plugin into `wysiwyg/tinymce/plugins/fileimagemanager/`.
+5. **Patches** `wysiwyg/fileimagemanager/config/filemanager.php` so uploads live in the repo-root `media/` folder (`media/source` + `media/thumbs`, committed alongside the project, URLs resolved at runtime so it works under any mount path) and injects a clearly-labelled **disabled** security gate.
 6. Writes `.bundle-version.json` and prints the URLs + a security reminder.
 
 Pin versions if you need to:
@@ -96,11 +96,12 @@ tinymce-imagemanager/
 ├─ media/                         # uploads, tracked in git
 │  ├─ source/                     #   files served to the editor (current_path)
 │  └─ thumbs/                     #   thumbnail cache
-├─ tinymce/                       # ⤓ downloaded (git-ignored)
-└─ fileimagemanager/              # ⤓ downloaded (git-ignored)
+└─ wysiwyg/                       # ⤓ downloaded (git-ignored)
+   ├─ tinymce/                    #   TinyMCE + Lucide icons + bundled plugin
+   └─ fileimagemanager/           #   File & Image Manager (prebuilt release)
 ```
 
-Only the glue and `media/` are tracked in git; `tinymce/` and `fileimagemanager/` are fetched by setup.
+Only the glue and `media/` are tracked in git; `wysiwyg/` (TinyMCE + the manager) is fetched by setup.
 
 ---
 
@@ -109,7 +110,7 @@ Only the glue and `media/` are tracked in git; `tinymce/` and `fileimagemanager/
 Include TinyMCE and point a `<textarea>` at it:
 
 ```html
-<script src="/tinymce-imagemanager/tinymce/tinymce.min.js"></script>
+<script src="/tinymce-imagemanager/wysiwyg/tinymce/tinymce.min.js"></script>
 <textarea class="wysiwyg"></textarea>
 <script>
 tinymce.init({
@@ -121,10 +122,10 @@ tinymce.init({
   promotion: false,
   menubar: false,
   toolbar_mode: 'floating',
-  external_plugins: {
-    fileimagemanager: '/tinymce-imagemanager/fileimagemanager/public/tinymce/plugin.js'
-  },
-  fileimagemanager_url: '/tinymce-imagemanager/fileimagemanager/public/',
+  // The plugin is bundled inside wysiwyg/tinymce/plugins/fileimagemanager/, so it
+  // loads via the `plugins` list below — no external_plugins needed.
+  fileimagemanager_url: '/tinymce-imagemanager/wysiwyg/fileimagemanager/public/',
+  fileimagemanager_dragdrop: true, // drop images straight onto the editor (default: true)
   plugins: 'quickbars autoresize anchor advlist autolink table code link lists image media fileimagemanager fullscreen visualblocks searchreplace',
   toolbar1: 'blocks | bold italic underline strikethrough removeformat | bullist numlist | alignleft aligncenter alignright | link unlink | blockquote',
   toolbar2: 'undo redo | table hr | image media fileimagemanager | searchreplace visualblocks | fullscreen code'
@@ -138,15 +139,20 @@ The demo page (`index.php`) generates this snippet with the correct paths for yo
 
 | Option | Why |
 |---|---|
-| `icons: 'lucide'` | Loads the custom pack from `tinymce/icons/lucide/` and auto-injects `custom.css`. |
+| `icons: 'lucide'` | Loads the custom pack from `wysiwyg/tinymce/icons/lucide/` and auto-injects `custom.css`. |
 | `license_key: 'gpl'` | Runs the community build without a Tiny Cloud key. |
-| `external_plugins.fileimagemanager` | Path to `fileimagemanager/public/tinymce/plugin.js` — adds the toolbar button **and** wires the native image/media/link file picker. |
-| `fileimagemanager_url` | URL of `fileimagemanager/public/`; opened in a same-origin dialog iframe. |
+| `plugins: '… fileimagemanager …'` | Loads the bundled plugin from `wysiwyg/tinymce/plugins/fileimagemanager/` — adds the toolbar button, the native image/media/link file picker, **and** drag & drop. |
+| `fileimagemanager_url` | URL of `wysiwyg/fileimagemanager/public/`; opened in a same-origin dialog iframe. |
+| `fileimagemanager_dragdrop` | `true`/`false` per editor — drop images straight onto the editor (default `true`). |
 | `fileimagemanager_title` | Optional dialog title. `fileimagemanager_crossdomain: true` enables cross-domain mode. |
+
+### Drag & drop
+
+With the plugin active, dropping image files straight onto the editor uploads them (no file manager needed) and opens a small window to insert each one — as a **preview linked to the full image** or as the **full image**. It works with multiple editors on one page. The target folder is set server-side (`dragdrop_path`, e.g. `cms/{YYYY}/{MM}/{DD}`, created on demand) and the feature can be turned off globally (`dragdrop_upload`) or per editor (`fileimagemanager_dragdrop: false`).
 
 ### Custom icons
 
-`custom/icons.js` registers an outlined Lucide pack under the name `lucide` and, when loaded, injects the sibling `tinymce/custom.css`. Because the Lucide pack supplies every icon, the stock `default` pack is replaced with an empty placeholder during setup — without that, TinyMCE throws when both are active. Edit the look in `custom/custom.css` and re-run setup (or copy it to `tinymce/custom.css` directly); bump the `?v=` cache-buster at the bottom of `custom/icons.js` when you change it.
+`custom/icons.js` registers an outlined Lucide pack under the name `lucide` and, when loaded, injects the sibling `wysiwyg/tinymce/custom.css`. Because the Lucide pack supplies every icon, the stock `default` pack is replaced with an empty placeholder during setup — without that, TinyMCE throws when both are active. Edit the look in `custom/custom.css` and re-run setup (or copy it to `wysiwyg/tinymce/custom.css` directly); bump the `?v=` cache-buster at the bottom of `custom/icons.js` when you change it.
 
 ---
 
@@ -154,7 +160,7 @@ The demo page (`index.php`) generates this snippet with the correct paths for yo
 
 The manager has **no built-in login**. As installed, anyone who can reach the URL can upload, rename and delete files. Pick at least one:
 
-**1. Session gate (recommended).** Open `fileimagemanager/config/filemanager.php` and uncomment the block at the top, then set the flag after your own login:
+**1. Session gate (recommended).** Open `wysiwyg/fileimagemanager/config/filemanager.php` and uncomment the block at the top, then set the flag after your own login:
 
 ```php
 if (session_status() === PHP_SESSION_NONE) {
@@ -181,7 +187,7 @@ $_SESSION['ImageEditorAllowed'] = true;
 
 Then open the manager with `?akey=change-me-to-a-long-random-string`.
 
-**3.** Or keep the whole `fileimagemanager/` folder behind your admin auth, a VPN, or an IP allow-list.
+**3.** Or keep the whole `wysiwyg/fileimagemanager/` folder behind your admin auth, a VPN, or an IP allow-list.
 
 The manager also enforces a CSRF token, an upload extension blacklist and `realpath()` path-traversal checks — but none of that is a substitute for the access control above.
 

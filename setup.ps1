@@ -51,8 +51,8 @@ try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::
 # ---------------------------------------------------------------------------
 $Root       = $PSScriptRoot
 $Custom     = Join-Path $Root 'custom'
-$TinymceDir = Join-Path $Root 'tinymce'
-$FimDir     = Join-Path $Root 'fileimagemanager'
+$TinymceDir = Join-Path $Root 'wysiwyg\tinymce'
+$FimDir     = Join-Path $Root 'wysiwyg\fileimagemanager'
 $Tmp        = Join-Path ([IO.Path]::GetTempPath()) ('tinymce-imgmgr-' + [Guid]::NewGuid().ToString('N'))
 
 $UA = 'tinymce-imagemanager-setup'
@@ -243,7 +243,7 @@ try {
     Write-Host " Done. TinyMCE $TinymceVersion + File & Image Manager $FimTag" -ForegroundColor Green
     Write-Host "========================================================================" -ForegroundColor Green
     Write-Host " Demo page :  http://localhost$urlBase/"
-    Write-Host " Manager   :  http://localhost$urlBase/fileimagemanager/public/"
+    Write-Host " Manager   :  http://localhost$urlBase/wysiwyg/fileimagemanager/public/"
 
     Write-Host "`n------------------------------------------------------------------------" -ForegroundColor Yellow
     Write-Host " SECURITY WARNING" -ForegroundColor Yellow
@@ -254,7 +254,7 @@ try {
     Write-Host ""
     Write-Host " Before production, lock it down — see the SECURITY section in README.md"
     Write-Host " and the commented gate at the top of:"
-    Write-Host "   fileimagemanager\config\filemanager.php" -ForegroundColor White
+    Write-Host "   wysiwyg\fileimagemanager\config\filemanager.php" -ForegroundColor White
     Write-Host "------------------------------------------------------------------------`n" -ForegroundColor Yellow
 }
 finally {

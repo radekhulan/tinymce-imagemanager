@@ -39,21 +39,21 @@ if ($src === false) {
  * 1) Media paths — stored at the REPOSITORY ROOT in media/{source,thumbs} so they can be
  *    committed alongside the project.
  *    - current_path / thumbs_base_path : filesystem. The config lives at
- *      <root>/fileimagemanager/config/, so dirname(__DIR__, 2) is the repo root.
+ *      <root>/wysiwyg/fileimagemanager/config/, so dirname(__DIR__, 3) is the repo root.
  *    - upload_dir / thumbs_upload_dir   : public URL, derived from SCRIPT_NAME at runtime.
- *      The manager is served from <root>/fileimagemanager/public, so we strip that suffix
- *      to get the repo-root URL.
+ *      The manager is served from <root>/wysiwyg/fileimagemanager/public, so we strip that
+ *      suffix to get the repo-root URL.
  *
  * In the produced PHP, str_replace('\\', '/', ...) normalises Windows separators in the
  * script path; '\\' in a single-quoted PHP string is a single backslash.
  */
-$urlExpr = "preg_replace('#/fileimagemanager/public\$#', '', rtrim(str_replace('\\\\', '/', dirname(\$_SERVER['SCRIPT_NAME'] ?? '/')), '/'))";
+$urlExpr = "preg_replace('#/wysiwyg/fileimagemanager/public\$#', '', rtrim(str_replace('\\\\', '/', dirname(\$_SERVER['SCRIPT_NAME'] ?? '/')), '/'))";
 
 $replacements = [
     'upload_dir'        => $urlExpr . " . '/media/source/'",
     'thumbs_upload_dir' => $urlExpr . " . '/media/thumbs/'",
-    'current_path'      => "dirname(__DIR__, 2) . '/media/source/'",
-    'thumbs_base_path'  => "dirname(__DIR__, 2) . '/media/thumbs/'",
+    'current_path'      => "dirname(__DIR__, 3) . '/media/source/'",
+    'thumbs_base_path'  => "dirname(__DIR__, 3) . '/media/thumbs/'",
 ];
 
 $changed = [];

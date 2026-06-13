@@ -17,12 +17,12 @@ if ($base === '.' || $base === '/') {
     $base = '';
 }
 
-$tinymceJs   = $base . '/tinymce/tinymce.min.js';
-$managerUrl  = $base . '/fileimagemanager/public/';
-$pluginUrl   = $base . '/fileimagemanager/public/tinymce/plugin.js';
+$tinymceJs   = $base . '/wysiwyg/tinymce/tinymce.min.js';
+$managerUrl  = $base . '/wysiwyg/fileimagemanager/public/';
+$pluginUrl   = $base . '/wysiwyg/fileimagemanager/public/tinymce/plugin.js';
 
-$installed = is_file($root . '/tinymce/tinymce.min.js')
-    && is_file($root . '/fileimagemanager/public/index.php');
+$installed = is_file($root . '/wysiwyg/tinymce/tinymce.min.js')
+    && is_file($root . '/wysiwyg/fileimagemanager/public/index.php');
 
 // Versions (written by setup)
 $ver = ['tinymce' => null, 'fileimagemanager' => null, 'updated' => null];
@@ -43,7 +43,7 @@ $langNames = [
     'da' => 'Dansk', 'fi' => 'Suomi', 'el' => 'Ελληνικά', 'ro' => 'Română',
 ];
 $langs = ['' => 'English (default)'];
-foreach (glob($root . '/tinymce/langs/*.js') ?: [] as $f) {
+foreach (glob($root . '/wysiwyg/tinymce/langs/*.js') ?: [] as $f) {
     $code = basename($f, '.js');
     $langs[$code] = $langNames[$code] ?? $code;
 }
@@ -66,10 +66,8 @@ tinymce.init({
   promotion: false,
   menubar: false,
   toolbar_mode: 'floating',
-  external_plugins: {
-    fileimagemanager: '{$pluginUrl}'
-  },
   fileimagemanager_url: '{$managerUrl}',
+  fileimagemanager_dragdrop: true,   // drop images straight onto the editor (default: true)
   plugins: 'quickbars autoresize anchor advlist autolink table code link lists image media fileimagemanager fullscreen visualblocks searchreplace',
   toolbar1: 'blocks | bold italic underline strikethrough removeformat | bullist numlist | alignleft aligncenter alignright | link unlink | blockquote',
   toolbar2: 'undo redo | table hr | image media fileimagemanager | searchreplace visualblocks | fullscreen code'
@@ -489,7 +487,6 @@ JS;
 <script src="<?= e($tinymceJs) ?>"></script>
 <script>
   var MANAGER_URL = <?= json_encode($managerUrl) ?>;
-  var PLUGIN_URL  = <?= json_encode($pluginUrl) ?>;
   var editorLang = '';
   var editorDark = false;
 
@@ -506,8 +503,8 @@ JS;
       menubar: false,
       toolbar_mode: 'floating',
       autoresize_min_height: 360,
-      external_plugins: { fileimagemanager: PLUGIN_URL },
       fileimagemanager_url: MANAGER_URL,
+      fileimagemanager_dragdrop: true,
       relative_urls: false,
       plugins: 'quickbars autoresize anchor advlist autolink table code link lists image media fileimagemanager fullscreen visualblocks searchreplace',
       toolbar1: 'blocks | bold italic underline strikethrough removeformat | bullist numlist | alignleft aligncenter alignright | link unlink | blockquote',

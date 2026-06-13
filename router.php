@@ -31,10 +31,10 @@ if ($uri !== '/' && $file !== false && is_file($file)
 }
 
 // 2) File & Image Manager front controller.
-if (strncmp($uri, '/fileimagemanager/public', 24) === 0) {
-    $fc = $root . '/fileimagemanager/public/index.php';
+if (strncmp($uri, '/wysiwyg/fileimagemanager/public', 32) === 0) {
+    $fc = $root . '/wysiwyg/fileimagemanager/public/index.php';
     if (is_file($fc)) {
-        $_SERVER['SCRIPT_NAME']     = '/fileimagemanager/public/index.php';
+        $_SERVER['SCRIPT_NAME']     = '/wysiwyg/fileimagemanager/public/index.php';
         $_SERVER['SCRIPT_FILENAME'] = $fc;
         require $fc;
         return true;
