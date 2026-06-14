@@ -61,10 +61,10 @@ if [ "$LOCAL_ONLY" -eq 0 ]; then
     found=1
   done < <(lan_ips | sort -u)
   [ "$found" -eq 0 ] && echo "  Network : (no LAN IPv4 detected)"
-  echo  "  manager : http://localhost:${PORT}/fileimagemanager/public/"
+  echo  "  manager : http://localhost:${PORT}/wysiwyg/fileimagemanager/public/"
   printf '  \033[33m! Reachable on your network — the file manager has no auth. Use --local-only to restrict.\033[0m\n'
 else
-  echo "  manager : ${LOCAL_URL}fileimagemanager/public/"
+  echo "  manager : ${LOCAL_URL}wysiwyg/fileimagemanager/public/"
 fi
 echo "  (press Ctrl+C to stop)"
 echo

@@ -80,10 +80,10 @@ if (-not $LocalOnly) {
     } else {
         Write-Host "  Network : (no LAN IPv4 detected)" -ForegroundColor DarkGray
     }
-    Write-Host "  manager : http://localhost:$Port/fileimagemanager/public/"
+    Write-Host "  manager : http://localhost:$Port/wysiwyg/fileimagemanager/public/"
     Write-Host "  ! Reachable on your network — the file manager has no auth. Use -LocalOnly to restrict." -ForegroundColor Yellow
 } else {
-    Write-Host "  manager : ${localUrl}fileimagemanager/public/"
+    Write-Host "  manager : ${localUrl}wysiwyg/fileimagemanager/public/"
 }
 Write-Host "  (press Ctrl+C to stop)`n"
 
